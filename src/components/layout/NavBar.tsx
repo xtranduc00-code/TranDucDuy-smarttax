@@ -7,10 +7,14 @@ import SchoolIcon from '@mui/icons-material/School';
 import { NavLink } from 'react-router-dom';
 
 const links = [
+  { to: '/dashboard', label: 'Bảng điều khiển' },
   { to: '/teachers', label: 'Giáo viên' },
   { to: '/students', label: 'Học sinh' },
   { to: '/rooms', label: 'Phòng học' },
   { to: '/activities', label: 'Lớp học' },
+  { to: '/courses', label: 'Khóa học' },
+  { to: '/enrollments', label: 'Ghi danh' },
+  { to: '/export', label: 'Xuất báo cáo' },
 ];
 
 export function NavBar() {

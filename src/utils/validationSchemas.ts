@@ -26,3 +26,29 @@ export const activitySchema = z.object({
   status: z.enum(['ongoing', 'finished']),
 });
 export type ActivityFormSchemaValues = z.infer<typeof activitySchema>;
+
+export const sessionSchema = z
+  .object({
+    id: z.string(),
+    title: z.string().trim().min(1, 'Tiêu đề buổi học là bắt buộc').max(150, 'Tiêu đề quá dài'),
+    date: z.string().min(1, 'Ngày học là bắt buộc'),
+    startTime: z.string().min(1, 'Giờ bắt đầu là bắt buộc'),
+    endTime: z.string().min(1, 'Giờ kết thúc là bắt buộc'),
+  })
+  .refine((session) => session.endTime > session.startTime, {
+    message: 'Giờ kết thúc phải sau giờ bắt đầu',
+    path: ['endTime'],
+  });
+
+export const courseSchema = z.object({
+  name: z.string().trim().min(2, 'Tên phải có ít nhất 2 ký tự').max(150, 'Tên quá dài'),
+  teacherId: z.string().min(1, 'Giáo viên là bắt buộc'),
+  roomId: z.string().min(1, 'Phòng học là bắt buộc'),
+  startDate: z.string().min(1, 'Ngày bắt đầu là bắt buộc'),
+  minimumStudents: z
+    .number({ message: 'Số lượng học viên tối thiểu phải là một số' })
+    .int('Số lượng học viên tối thiểu phải là số nguyên')
+    .min(1, 'Số lượng học viên tối thiểu phải lớn hơn 0'),
+  sessions: z.array(sessionSchema).min(1, 'Cần ít nhất một buổi học'),
+});
+export type CourseFormSchemaValues = z.infer<typeof courseSchema>;

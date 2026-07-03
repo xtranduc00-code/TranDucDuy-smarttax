@@ -1,14 +1,10 @@
 import Chip from '@mui/material/Chip';
 import type { Status } from '../types/common';
+import { statusLabels } from '../utils/statusLabels';
 
 interface StatusBadgeProps {
   status: Status;
 }
-
-const statusLabels: Record<Status, string> = {
-  Active: 'Hoạt động',
-  Inactive: 'Ngừng hoạt động',
-};
 
 export function StatusBadge({ status }: StatusBadgeProps) {
   const isActive = status === 'Active';
